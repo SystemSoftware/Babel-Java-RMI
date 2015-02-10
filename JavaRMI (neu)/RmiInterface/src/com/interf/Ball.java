@@ -4,7 +4,6 @@ import java.util.Map;
 
 /**
  * Represents the ball object, that is given around the server circle.
- * @author Blank
  *
  */
 public interface Ball {

@@ -10,17 +10,14 @@ import com.interf.BallImpl;
 
 /**
  * Converts to ball data, so that it can be communicated between different servers.
- * @author Blank
  *
  */
 public class BallConversion {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		try {
 			testConversion();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

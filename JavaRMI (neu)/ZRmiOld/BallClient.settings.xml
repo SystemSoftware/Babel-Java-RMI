@@ -1,3 +1,0 @@
-<Settings>
-	<RmiServiceSettings host="localhost" port="1099" objectName="BallHolderImpl"></RmiServiceSettings>
-	<jsServiceSettings></jsServiceSettings></Settings>

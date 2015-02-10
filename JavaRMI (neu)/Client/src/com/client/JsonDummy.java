@@ -4,11 +4,10 @@ public class JsonDummy implements JsonServer{
 
 	@Override
 	public String receiveBall() throws Exception {
-		// TODO Auto-generated method stub
-		//return null;
+		Thread.sleep(2000);
 		return json;
 	}
 		
-		String json = "{\"id\": \"Ball 1\", \"hold-time\": 1, \"hop-count\": 5, \"payload\": {\"Soap-Dings\": 100, \"JavaBeans\": 120}}";	
+		String json = "{\"id\": \"Ball 1\", \"hold-time\": 1, \"hop-count\": 0, \"payload\": {\"JsonObjekt\": 100, \"JavaBeans\": 120}}";
 	
 }

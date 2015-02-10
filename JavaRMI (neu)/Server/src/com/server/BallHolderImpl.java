@@ -31,7 +31,9 @@ public class BallHolderImpl extends UnicastRemoteObject implements BallHolder {
 	public void sendBall(Ball ball) {
 		ball.increaseHopCount();
 		balls.add(ball);
+		System.out.println("Ball with id " + ball.getId() + " received!");
 	}
 	
 	Queue<Ball> balls;
+
 }

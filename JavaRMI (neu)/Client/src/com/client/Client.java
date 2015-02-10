@@ -13,29 +13,42 @@ import com.interf.BallHolder;
 
 
 
+/**
+ * Represents the client, that shares the ball between the JSON and the Java RMI service.
+ */
 public class Client {
 
 	public static void main (String args[]) throws RemoteException, NotBoundException
 		{
 			Registry registry = LocateRegistry.getRegistry("localhost", Constant.RMI_PORT); //localhost: portnr als int
-			BallHolder ballHolder = (BallHolder) registry.lookup(Constant.RMI_ID); //lookup-option: assign statement to new local variable (Ctrl+2,L) --> Rem aus com.interf verlinkt
-			// System.out.println(remote.isLoginValid("ak")); //ak(already know?) -'username' --> "We know that"
-			// System.out.println(remote.isLoginValid("test")); //wieder 'username'
+			BallHolder ballHolder = (BallHolder) registry.lookup(Constant.RMI_ID); 
 			
 			
-			// JsonServerImpl jsonServer = new JsonServerImpl();
-			JsonServer jsonServer = new JsonDummy();
+			boolean useJsonDummy = true;
+			JsonServer jsonServer;
+			
+			if (useJsonDummy) {
+				jsonServer = new JsonDummy();
+			} else {
+				jsonServer = new JsonServerImpl();
+			}
 			
 			
-			while (true) {
+			while (true) {		// ball polling loop
+				
 				try {
 					String jsonBall = jsonServer.receiveBall();
 					if( null != jsonBall) {
 						BallImpl javaBall = BallConversion.ConvertJsonToJava(jsonBall);
-						javaBall.hopCount++;
-						Thread.sleep(javaBall.holdTime * 1000);
 						
-						// Payload behandeln
+						// update ball stats here
+						javaBall.hopCount++;
+						Thread.sleep(javaBall.holdTime * 4000);
+						
+						System.out.println("Ball has had " + javaBall.hopCount + " contacts");
+						
+						// payload calculation
+						// Wenn noch kein Zeitstempel --> aktuelle Zeit
 						Date d = new Date();	
 						long currentTime = d.getTime();							
 						if(javaBall.payLoad.containsKey(Constant.RMI_SERVER_KEY)) {
@@ -45,13 +58,19 @@ public class Client {
 							roundTime = currentTime - lastTime;
 							System.out.println("Received the ball after " + roundTime + "MS");
 						}
+				
 						javaBall.payLoad.put(Constant.RMI_SERVER_KEY, currentTime + "");
+						
+						
+						
 						ballHolder.sendBall(javaBall);
 						System.out.println("Ball has been sent to server!");
 					}
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+				
 			}
 		}
 }

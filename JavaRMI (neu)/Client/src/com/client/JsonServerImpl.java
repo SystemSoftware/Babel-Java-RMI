@@ -3,25 +3,21 @@ package com.client;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import com.interf.Ball;
+import com.interf.Constant;
 
 public class JsonServerImpl implements JsonServer {
 
 	String serverURL;
 	
-	
-	public boolean isBallAvailable() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	
+	/**
+	 * Receives the ball from the JSON-Server.
+	 * @return A JSON-String, if the ball is available, else null.
+	 * @exception If the server is not available.
+	 */
 	public String receiveBall() throws Exception {
-		// TODO Auto-generated method stub
-		URL url = new URL(serverURL);
+		URL url = new URL(Constant.JSON_SERVER_URL);
 		HttpURLConnection con = (HttpURLConnection) url.openConnection();
 		con.setRequestMethod("GET");
-		// con.setRequestProperty("", "");
 		
 		String jsonString = null;
 		if( con.getResponseCode() == 200) {
@@ -32,12 +28,6 @@ public class JsonServerImpl implements JsonServer {
 					
 		}
 		return jsonString;	
-	}
-
-
-	public void sendBall(Ball ball) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
