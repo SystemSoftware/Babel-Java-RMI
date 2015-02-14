@@ -1,5 +1,8 @@
 package com.client;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
@@ -7,8 +10,6 @@ import com.interf.Constant;
 
 public class JsonServerImpl implements JsonServer {
 
-	String serverURL;
-	
 	/**
 	 * Receives the ball from the JSON-Server.
 	 * @return A JSON-String, if the ball is available, else null.
@@ -21,11 +22,12 @@ public class JsonServerImpl implements JsonServer {
 		
 		String jsonString = null;
 		if( con.getResponseCode() == 200) {
-
 			
-			jsonString = con.getResponseMessage();
-			
-					
+			InputStream stream = con.getInputStream();
+			InputStreamReader isReader = new InputStreamReader(stream);
+			BufferedReader br = new BufferedReader(isReader);
+			jsonString = br.readLine();
+			br.close();	
 		}
 		return jsonString;	
 	}

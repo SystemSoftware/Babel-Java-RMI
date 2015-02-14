@@ -19,11 +19,13 @@ public class BallHolderImpl extends UnicastRemoteObject implements BallHolder {
 
 	@Override
 	public boolean isBallAvailable() {
+		//System.out.println("Balls have been checked ("+ balls.size() + " available)");
 		return (balls.size() > 0);
 	}
 
 	@Override
 	public Ball receiveBall() {
+		System.out.println("Ball has been requested.");
 		return balls.poll();
 	}
 

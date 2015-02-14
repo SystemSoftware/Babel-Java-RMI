@@ -24,7 +24,7 @@ public class Client {
 			BallHolder ballHolder = (BallHolder) registry.lookup(Constant.RMI_ID); 
 			
 			
-			boolean useJsonDummy = true;
+			boolean useJsonDummy = false;
 			JsonServer jsonServer;
 			
 			if (useJsonDummy) {
@@ -37,13 +37,15 @@ public class Client {
 			while (true) {		// ball polling loop
 				
 				try {
+					Thread.sleep(0);
 					String jsonBall = jsonServer.receiveBall();
 					if( null != jsonBall) {
+						System.out.println(jsonBall);
 						BallImpl javaBall = BallConversion.ConvertJsonToJava(jsonBall);
 						
 						// update ball stats here
 						javaBall.hopCount++;
-						Thread.sleep(javaBall.holdTime * 4000);
+						Thread.sleep(javaBall.holdTime * 1000);
 						
 						System.out.println("Ball has had " + javaBall.hopCount + " contacts");
 						
@@ -60,17 +62,12 @@ public class Client {
 						}
 				
 						javaBall.payLoad.put(Constant.RMI_SERVER_KEY, currentTime + "");
-						
-						
-						
 						ballHolder.sendBall(javaBall);
 						System.out.println("Ball has been sent to server!");
 					}
-					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				
 			}
 		}
 }

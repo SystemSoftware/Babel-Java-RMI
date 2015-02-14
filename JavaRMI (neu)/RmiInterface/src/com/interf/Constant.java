@@ -21,5 +21,5 @@ public class Constant {
 	/**
 	 * URL of JSON server.
 	 */
-	public static final String JSON_SERVER_URL = "";
+	public static final String JSON_SERVER_URL = "http://10.42.10.106:3000/";
 }
